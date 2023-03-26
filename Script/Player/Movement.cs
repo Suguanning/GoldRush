@@ -9,7 +9,7 @@ public class Movement : MonoBehaviour
     public bool facingRight = true;  // For determining which way the player is currently facing.
 
     private Collision coll;
-    //private Animator animator;
+    public Animator animator;
     [HideInInspector]
     public Rigidbody2D rb;
     //private AnimationScript anim;
@@ -22,14 +22,17 @@ public class Movement : MonoBehaviour
     public float slideSpeed = 5;
     public float wallJumpLerp = 10;
     public float dashSpeed = 20;
+    public float glideSpeed = 1.0f;
 
     [Space]
     [Header("Booleans")]
+    public bool flip;
     public bool canMove;
     public bool wallGrab;
     public bool wallJumped;
     public bool wallSlide;
     public bool isDashing;
+    public bool isGliding;
     public bool doubleJumped;
 
     [Space]
@@ -55,17 +58,21 @@ public class Movement : MonoBehaviour
     public bool canGrab;
     public bool canDoubleJump;
     public bool canDash;
-
+    public bool canGlide;
     void Start()
     {
-        //animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
+        if(animator == null)
+        {
+            animator = GetComponentInChildren<Animator>();
+        }
         coll = GetComponent<Collision>();
         rb = GetComponent<Rigidbody2D>();
        // anim = GetComponentInChildren<AnimationScript>();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         //读取方向输入
         float x = Input.GetAxis("Horizontal");
@@ -103,12 +110,15 @@ public class Movement : MonoBehaviour
             jumpTimer -= Time.deltaTime;
         }
         //如果和地面接触并且没有在冲刺, 打开跳墙后移动开关. 角色下落脚本打开
+        if (coll.onGround)
+            animator.SetBool("Jumping", false);
+        else
+            animator.SetBool("Jumping", true);
+
         if (coll.onGround && !isDashing)
         {
             wallJumped = false;
             GetComponent<BetterJumping>().enabled = true;
-
-                //animator.SetBool("Jumping", false);
         }
 
 
@@ -124,7 +134,7 @@ public class Movement : MonoBehaviour
         }
         else
         {
-            rb.gravityScale = 3;
+            //rb.gravityScale = 3;
         }
 
         if(coll.onWall && !coll.onGround)
@@ -139,26 +149,54 @@ public class Movement : MonoBehaviour
         if (!coll.onWall || coll.onGround)
             wallSlide = false;
 
+
         if (Input.GetButtonDown("Jump"))
         {
-            //anim.SetTrigger("jump");
-
             if (coll.onGround)
+            {
                 Jump(Vector2.up, false);
-            if (coll.onWall && !coll.onGround)
-                WallJump();
-
-            if (!coll.onGround &&!doubleJumped &&canDoubleJump)
+                //animator.SetBool("Jumping", true);
+            }
+            if (!coll.onGround && !doubleJumped && canDoubleJump)
             {
                 doubleJumped = true;
                 Jump(Vector2.up, false);
+                //animator.SetBool("Jumping", true);
             }
         }
-        
+        if (Input.GetButton("Jump"))
+        {
+            if (!coll.onGround && canGlide)
+            {
+                float fallSpeed = rb.velocity.y;
+                if (fallSpeed < -0.1f)
+                {
+                    GetComponent<BetterJumping>().enabled = false;
+                    rb.velocity = new Vector2(rb.velocity.x, -glideSpeed);
+                    isGliding = true;
+                    rb.gravityScale = 0;
+                }
+            }
+        }
+        if (Input.GetButtonUp("Jump"))
+        {
+            rb.gravityScale = 3;
+            GetComponent<BetterJumping>().enabled = true;
+            isGliding = false;
+        }
+
         if (Input.GetButtonDown("Fire3") && !hasDashed)
         {
             if(xRaw != 0 || yRaw != 0)
                 Dash(xRaw, yRaw);
+        }
+
+        if (isGliding && coll.onGround)
+        {
+
+            rb.gravityScale = 3;
+            GetComponent<BetterJumping>().enabled = true;
+            isGliding = false;
         }
 
         if (coll.onGround && !groundTouch)
@@ -190,7 +228,6 @@ public class Movement : MonoBehaviour
             // ... flip the player.
             Flip();
         }
-
     }
 
     void GroundTouch()
@@ -198,7 +235,7 @@ public class Movement : MonoBehaviour
         hasDashed = false;
         isDashing = false;
         doubleJumped = false;
-
+        isGliding = false;
         //side = anim.sr.flipX ? -1 : 1;
 
         //jumpParticle.Play();
@@ -245,8 +282,11 @@ public class Movement : MonoBehaviour
 
         //这句话打开之后, 冲刺后将无法二段跳
         //doubleJumped = true;
-
-        yield return new WaitForSeconds(.3f);
+        Debug.Log("start dash");
+        canMove = false;
+        yield return new WaitForSeconds(0.2f);
+        canMove = true;
+        Debug.Log("end dash");
         //粒子系统相关
         //dashParticle.Stop();
         rb.gravityScale = 3;
@@ -320,7 +360,7 @@ public class Movement : MonoBehaviour
         if (!wallJumped)
         {
             rb.velocity = new Vector2(dir.x * speed, rb.velocity.y);
-           // animator.SetFloat("Speed", dir.x);
+            animator.SetFloat("Speed", dir.x);
            // animator.SetFloat("YSpeed", rb.velocity.y);
         }
         else
@@ -372,11 +412,14 @@ public class Movement : MonoBehaviour
     {
         // Switch the way the player is labelled as facing.
         facingRight = !facingRight;
+        if (flip)
+        {
+            // Multiply the player's x local scale by -1.
+            Vector3 theScale = transform.localScale;
+            theScale.x *= -1;
+            transform.localScale = theScale;
+        }
 
-        // Multiply the player's x local scale by -1.
-        //Vector3 theScale = transform.localScale;
-        //theScale.x *= -1;
-        //transform.localScale = theScale;
     }
 
     //void WallParticle(float vertical)

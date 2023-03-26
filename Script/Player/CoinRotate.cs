@@ -6,26 +6,34 @@ public class CoinRotate : MonoBehaviour
 {
     // Start is called before the first frame update
     private Transform transform;
-
+    public bool autoRotate;
     public Movement move;
     public float spinRate = 1.0f;
     void Start()
     {
         transform = GetComponent<Transform>();
- 
+        autoRotate = true;
        // move = GetComponent<Movement>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        float z = move.rb.velocity.magnitude;
-        if (move.facingRight)
+        if(autoRotate == true)
         {
-            z = -z;
+            float z = move.rb.velocity.magnitude;
+            if (move.facingRight)
+            {
+                z = -z;
+            }
+            Vector3 spin = new Vector3(0, 0, z * spinRate);
+            transform.Rotate(spin);
         }
-        Vector3 spin = new Vector3(0, 0, z * spinRate);
-        transform.Rotate(spin);
+        else
+        {
+            Quaternion tmp= Quaternion.identity;
+            transform.rotation = tmp;
+        }
         transform.position = move.transform.position;
     }
 }
