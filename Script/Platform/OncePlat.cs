@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class OncePlat : MonoBehaviour
 {
-    public float coll_time;
-    public bool is_coll;
+    public float collTime;
+    public float notCollTime;
+    public bool isColl;
+    public float platMaxExistTime;
     public Collision coll;
     private SpriteRenderer render;
     private BoxCollider2D box;
@@ -14,7 +16,7 @@ public class OncePlat : MonoBehaviour
     {
         render = GetComponent<SpriteRenderer>();
         box = GetComponent<BoxCollider2D>();
-        coll_time = 0;
+        collTime = 0;
     }
 
     // Update is called once per frame
@@ -25,31 +27,34 @@ public class OncePlat : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (is_coll) coll_time += 0.02f;
-        if (coll_time > 1f)
+        // 碰撞后累加到超过最大存留时间则使平台失效
+        if (isColl) collTime += 0.02f;
+        if (collTime > platMaxExistTime)
         {
             render.enabled = false;
             box.enabled = false;
-            is_coll = false;
-            coll_time = 0;
+            isColl = false;
+            collTime = 0;
             return;
         }
-        Debug.Log(render.enabled);
-        bool tmp = render.enabled;
-        if (coll.onGround&&!tmp)
+
+        // 平台失效后类型到超过最大失效时间后重新激活平台
+        if (!render.enabled) notCollTime += 0.02f;
+        if (notCollTime > platMaxExistTime)
         {
             render.enabled = true;
             box.enabled = true;
+            notCollTime = 0;
         } 
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        is_coll = true;
+        isColl = true;
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        is_coll = false;
+       // isColl = false;
     }
 }
