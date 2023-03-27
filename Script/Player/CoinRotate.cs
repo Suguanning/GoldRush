@@ -5,7 +5,7 @@ using UnityEngine;
 public class CoinRotate : MonoBehaviour
 {
     // Start is called before the first frame update
-    private Transform transform;
+    private new Transform transform;
     public bool autoRotate;
     public Movement move;
     public float spinRate = 1.0f;
