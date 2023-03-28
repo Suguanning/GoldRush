@@ -9,13 +9,16 @@ public class ShowSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        diaBox.OnShowNumRecieve(1);
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetButtonDown("Fire1"))
+        {
+            GameEvents.current.ShowTrigerEnter(1);
+        }
     }
 
     void RunScript(int sceneNum, int len)

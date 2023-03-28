@@ -30,4 +30,30 @@ public class GameEvents : MonoBehaviour
             OnObjectBackTriggerEnter(object_id);
         }
     }
+
+    public event Action OnDangerPlatEnter;
+    public void DangerPlatEnter( )
+    {
+        if (OnDangerPlatEnter != null)
+        {
+            OnDangerPlatEnter();
+        }
+    }
+
+    public event Action<int> OnShowTrigerEnter;
+    public void ShowTrigerEnter(int showNum)
+    {
+        if (OnShowTrigerEnter != null)
+        {
+            OnShowTrigerEnter(showNum);
+        }
+    }
+    public event Action OnShowTrigerExit;
+    public void ShowTrigerExit()
+    {
+        if (OnShowTrigerExit != null)
+        {
+            OnShowTrigerExit();
+        }
+    }
 }

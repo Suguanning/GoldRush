@@ -19,6 +19,9 @@ public class StatusCtrl : MonoBehaviour
         move = GetComponent<Movement>();
         coll = GetComponent<Collision>();
         trans = GetComponent<Transform>();
+        GameEvents.current.OnShowTrigerEnter += OnShowModeEnter;
+        GameEvents.current.OnShowTrigerExit += OnShowModeExit;
+        GameEvents.current.OnDangerPlatEnter += OnDangerPlatEnter;
     }
 
     // Update is called once per frame
@@ -41,8 +44,9 @@ public class StatusCtrl : MonoBehaviour
         trans.position = bornPosition;
     }
     //CallBack functions
-    private void OnShowModeEnter()
+    private void OnShowModeEnter(int showNum)
     {
+        move.rb.velocity = new Vector2(0, 0);
         mode = "show";
     }
     private void OnShowModeExit()

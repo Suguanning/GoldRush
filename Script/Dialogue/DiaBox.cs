@@ -5,6 +5,10 @@ using UnityEngine.UI;
 public class DiaBox : MonoBehaviour
 {
     // Start is called before the first frame update
+    public Image Mark;
+    public Image CoinMark;
+    public Image Coin;
+    //public Image Joker;
     public Scripts scp;
     public Text character;
     public Text lines;
@@ -16,19 +20,59 @@ public class DiaBox : MonoBehaviour
     void Start()
     {
         scp = GetComponent<Scripts>();
+        Mark.enabled = false;
+        CoinMark.enabled = false;
+        Coin.enabled = false;
+        //Joker.enable = true;
+        GameEvents.current.OnShowTrigerEnter += OnShowNumRecieve;
+        
+        //SetDiaBoxEnable(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+        string spkName;
+        
         if (enable)
         {
-            if (Input.GetButtonDown("Jump"))
+            if (Input.GetKeyDown(KeyCode.F))
             {
                 convIndex++;
                 if(convIndex < convLen)
                 {
                     SetNameAndLine(scp.convAndAct[showNum - 1].conv[convIndex].speaker, scp.convAndAct[showNum - 1].conv[convIndex].lines);
+                    spkName = scp.convAndAct[showNum - 1].conv[convIndex].speaker;
+
+                    if (spkName == "Mark")
+                    {
+                        Mark.enabled = true;
+                        CoinMark.enabled = false;
+                        Coin.enabled = false;
+                        //Joker.enable = false;
+                    }
+                    else if (spkName == "CoinMark")
+                    {
+                        Mark.enabled = false;
+                        CoinMark.enabled = true;
+                        Coin.enabled = false;
+                        //Joker.enable = false;
+                    }
+                    else if (spkName == "Coin")
+                    {
+                        Mark.enabled = false;
+                        CoinMark.enabled = false;
+                        Coin.enabled = true;
+                        //Joker.enable = false;
+                    }
+                    else if (spkName == "Joker")
+                    {
+                        Mark.enabled = false;
+                        CoinMark.enabled = false;
+                        Coin.enabled = false;
+                        //Joker.enable = true;
+                    }
+
                 }
                 else
                 {
@@ -49,8 +93,10 @@ public class DiaBox : MonoBehaviour
     public void OnShowNumRecieve(int num)
     {
         enable = true;
-        SetDiaBoxEnable(enabled);
+        SetDiaBoxEnable(true);
         showNum = num;
+        convIndex = 0;
+        Debug.Log(scp.convAndAct[showNum - 1].conv[0].speaker);
         SetNameAndLine(scp.convAndAct[showNum - 1].conv[0].speaker, scp.convAndAct[showNum - 1].conv[0].lines);
         convLen = scp.convAndAct[num - 1].convLen;
     }
@@ -59,5 +105,7 @@ public class DiaBox : MonoBehaviour
         enable = false;
         SetDiaBoxEnable(false);
         showNum = 0;
+        convIndex = 0;
+        GameEvents.current.ShowTrigerExit();
     }
 }
