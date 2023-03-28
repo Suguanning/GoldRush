@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class DiaBox : MonoBehaviour
 {
     // Start is called before the first frame update
+    private Image DiaBoxImage;
     public Image Mark;
     public Image CoinMark;
     public Image Coin;
@@ -12,7 +13,7 @@ public class DiaBox : MonoBehaviour
     public Scripts scp;
     public Text character;
     public Text lines;
-    public Image icon;
+    public Image Fkey;
     public bool enable = false;
     public int showNum;
     public int convIndex;
@@ -20,10 +21,18 @@ public class DiaBox : MonoBehaviour
     void Start()
     {
         scp = GetComponent<Scripts>();
+        DiaBoxImage = GetComponent<Image>();
+        //Í·Ïñ
         Mark.enabled = false;
         CoinMark.enabled = false;
         Coin.enabled = false;
         //Joker.enable = true;
+        Fkey.enabled = false;
+
+        character.enabled = false;
+        lines.enabled = false;
+        DiaBoxImage.enabled = false;
+        
         GameEvents.current.OnShowTrigerEnter += OnShowNumRecieve;
         
         //SetDiaBoxEnable(false);
@@ -43,36 +52,7 @@ public class DiaBox : MonoBehaviour
                 {
                     SetNameAndLine(scp.convAndAct[showNum - 1].conv[convIndex].speaker, scp.convAndAct[showNum - 1].conv[convIndex].lines);
                     spkName = scp.convAndAct[showNum - 1].conv[convIndex].speaker;
-
-                    if (spkName == "Mark")
-                    {
-                        Mark.enabled = true;
-                        CoinMark.enabled = false;
-                        Coin.enabled = false;
-                        //Joker.enable = false;
-                    }
-                    else if (spkName == "CoinMark")
-                    {
-                        Mark.enabled = false;
-                        CoinMark.enabled = true;
-                        Coin.enabled = false;
-                        //Joker.enable = false;
-                    }
-                    else if (spkName == "Coin")
-                    {
-                        Mark.enabled = false;
-                        CoinMark.enabled = false;
-                        Coin.enabled = true;
-                        //Joker.enable = false;
-                    }
-                    else if (spkName == "Joker")
-                    {
-                        Mark.enabled = false;
-                        CoinMark.enabled = false;
-                        Coin.enabled = false;
-                        //Joker.enable = true;
-                    }
-
+                    SetIcon(spkName);
                 }
                 else
                 {
@@ -89,6 +69,41 @@ public class DiaBox : MonoBehaviour
     public void SetDiaBoxEnable(bool enable)
     {
         gameObject.SetActive(enable);
+        character.enabled = enable;
+        lines.enabled = enable;
+        DiaBoxImage.enabled = enable;
+        Fkey.enabled = enable;
+    }
+    public void SetIcon(string spkName)
+    {
+        if (spkName == "Mark")
+        {
+            Mark.enabled = true;
+            CoinMark.enabled = false;
+            Coin.enabled = false;
+            //Joker.enable = false;
+        }
+        else if (spkName == "CoinMark")
+        {
+            Mark.enabled = false;
+            CoinMark.enabled = true;
+            Coin.enabled = false;
+            //Joker.enable = false;
+        }
+        else if (spkName == "Coin")
+        {
+            Mark.enabled = false;
+            CoinMark.enabled = false;
+            Coin.enabled = true;
+            //Joker.enable = false;
+        }
+        else if (spkName == "Joker")
+        {
+            Mark.enabled = false;
+            CoinMark.enabled = false;
+            Coin.enabled = false;
+            //Joker.enable = true;
+        }
     }
     public void OnShowNumRecieve(int num)
     {
@@ -98,7 +113,9 @@ public class DiaBox : MonoBehaviour
         convIndex = 0;
         Debug.Log(scp.convAndAct[showNum - 1].conv[0].speaker);
         SetNameAndLine(scp.convAndAct[showNum - 1].conv[0].speaker, scp.convAndAct[showNum - 1].conv[0].lines);
+        SetIcon(scp.convAndAct[showNum - 1].conv[0].speaker);
         convLen = scp.convAndAct[num - 1].convLen;
+
     }
     public void ShowEnd()
     {

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class StatusCtrl : MonoBehaviour
 {
@@ -9,19 +10,28 @@ public class StatusCtrl : MonoBehaviour
     public string mode = "play";
     public Movement move;
     public Collision coll;
-
+    public CoinRotate rotate;
     public bool isAlive = true;
-
+    public float squashTime = 0.5f;
+    public float recoverTime = 3.0f;
+    public float squashKeep = 3.0f;
+    public bool doSq = false;
+    public bool doRc = false;
     private Transform trans;
+    private event Action OnSqExit;
     // Start is called before the first frame update
     void Start()
     {
         move = GetComponent<Movement>();
         coll = GetComponent<Collision>();
         trans = GetComponent<Transform>();
+        rotate = GetComponentInChildren<CoinRotate>();
+        LeanTween.init(1800);
         GameEvents.current.OnShowTrigerEnter += OnShowModeEnter;
         GameEvents.current.OnShowTrigerExit += OnShowModeExit;
         GameEvents.current.OnDangerPlatEnter += OnDangerPlatEnter;
+        OnSqExit += OnSquashPlatExit;
+
     }
 
     // Update is called once per frame
@@ -30,14 +40,24 @@ public class StatusCtrl : MonoBehaviour
         if(mode == "play")
         {
             move.enabled = true;
-        }else if(mode == "show")
+        }
+        else if(mode == "show")
         {
             move.enabled = false;
         }
-
+        if (doSq)
+        {
+            OnSquashPlatEnter();
+            doSq = false;
+        }
+        if (doRc)
+        {
+            OnSquashPlatExit();
+            doRc = false;
+        }
     }
 
-    private void Reset()
+    private void ResetStatus()
     {
         health = 100;
         isAlive = true;
@@ -66,11 +86,23 @@ public class StatusCtrl : MonoBehaviour
 
     private void OnSquashPlatEnter()
     {
-
+        rotate.autoRotate = false;
+        rotate.enabled = false;
+        LeanTween.scaleX(gameObject, 1.7f, squashTime).setEase(LeanTweenType.easeOutBounce);
+        LeanTween.scaleY(gameObject, 0.3f, squashTime).setEase(LeanTweenType.easeOutBounce);
     }
+  
     private void OnSquashPlatExit()
     {
-
+        StartCoroutine(SquashRecover());
+    }
+    IEnumerator SquashRecover()
+    {
+        yield return new WaitForSeconds(squashKeep);
+        rotate.autoRotate = true;
+        rotate.enabled = true;
+        LeanTween.scaleX(gameObject, 1, recoverTime).setEase(LeanTweenType.easeOutBounce);
+        LeanTween.scaleY(gameObject, 1, recoverTime).setEase(LeanTweenType.easeOutBounce);
     }
 
     private void OnMovePlatEnter()
