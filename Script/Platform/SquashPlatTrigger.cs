@@ -44,11 +44,12 @@ public class SquashPlatTrigger : MonoBehaviour
             LeanTween.move(parentObj, new Vector3(sonX, sonY, 0), moveSpeed);
             isMove = true;
         }
+
+        // 到达子物体位置
         if (parentObj.transform.position == new Vector3(sonX, sonY, 0)) arrive = true;
-        if (parentObj.transform.position == new Vector3(parentX, parentY))
-        {
-            isMove = false;
-        }
+        // 回到父物体位置
+        if (parentObj.transform.position == new Vector3(parentX, parentY)) isMove = false;
+        // 到达子物体位置进行停留计时
         if (arrive) stayTime += 0.02;
         if (stayTime >= maxStayTime)
         {

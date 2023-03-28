@@ -40,6 +40,24 @@ public class GameEvents : MonoBehaviour
         }
     }
 
+    public event Action OnSquashPlatEnter;
+    public void SquashPlatEnter()
+    {
+        if (OnDangerPlatEnter != null)
+        {
+            OnSquashPlatEnter();
+        }
+    }
+
+    public event Action OnSquashPlatExit;
+    public void SquashPlatExit()
+    {
+        if (OnSquashPlatExit != null)
+        {
+            OnSquashPlatExit();
+        }
+    }
+
     public event Action<int> OnShowTrigerEnter;
     public void ShowTrigerEnter(int showNum)
     {
