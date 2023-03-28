@@ -30,7 +30,7 @@ public class OnewayPlat : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             Debug.Log("not ignore");
-            //Physics2D.IgnoreCollision(collision.collider, platCollider, false);
+            Physics2D.IgnoreCollision(collision.collider, platCollider, false);
         }
     }
 }
