@@ -5,20 +5,27 @@ using System;
 
 public class StatusCtrl : MonoBehaviour
 {
-    public float health = 100;
-    public Vector3 bornPosition;
+
+    [Space]
     public string mode = "play";
-    public Movement move;
-    public Collision coll;
-    public CoinRotate rotate;
+    private Movement move;
+    private Collision coll;
+    private CoinRotate rotate;
+    [Space]
+    [Header("Booleans")]
     public bool isAlive = true;
     public bool isSquashing = false;
+    public bool doSq = false;
+    public bool doRc = false;
+    [Space]
+    [Header("Stats")]
+    public float health = 100;
+    public Vector3 bornPosition;
     public float squashTime = 0.5f;
     public float recoverTime = 3.0f;
     public float squashKeep = 3.0f;
-    public int recoverCnt = 0;
-    public bool doSq = false;
-    public bool doRc = false;
+    private int recoverCnt = 0;
+
     private Transform trans;
     // Start is called before the first frame update
     void Start()
@@ -48,12 +55,14 @@ public class StatusCtrl : MonoBehaviour
         }
         if (doSq)
         {
-            OnSquashPlatEnter();
+            health -= 10;
+            GameEvents.current.SetHealth(health);
             doSq = false;
         }
         if (doRc)
         {
-            OnSquashPlatExit();
+            health += 10;
+            GameEvents.current.SetHealth(health);
             doRc = false;
         }
     }
@@ -61,14 +70,14 @@ public class StatusCtrl : MonoBehaviour
     {
         if (!isSquashing)
         {
-            if (recoverCnt * Time.fixedDeltaTime < squashKeep)
+            if (recoverCnt * Time.fixedDeltaTime < squashKeep && recoverCnt > -0.5f)
             {
                 recoverCnt++;
                 
             }else if(recoverCnt * Time.fixedDeltaTime >= squashKeep)
             {
                 SquashRecover();
-                recoverCnt = 0;
+                recoverCnt = -1;
             }
         }
     }
@@ -95,6 +104,7 @@ public class StatusCtrl : MonoBehaviour
     {
         health = 0;
         isAlive = false;
+        GameEvents.current.SetHealth(0);
     }
 
     private void OnDangerPlatExit()

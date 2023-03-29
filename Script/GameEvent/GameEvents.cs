@@ -74,4 +74,13 @@ public class GameEvents : MonoBehaviour
             OnShowTrigerExit();
         }
     }
+
+    public event Action<float> OnSetHealth;
+    public void SetHealth(float h)
+    {
+        if(OnSetHealth != null)
+        {
+            OnSetHealth(h);
+        }
+    }
 }
