@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1924085036775249343}
   - component: {fileID: 1924085036775249342}
   - component: {fileID: 5648211836442176677}
+  - component: {fileID: 4352884837638687165}
   m_Layer: 3
   m_Name: SquashPlat
   m_TagString: Untagged
@@ -125,6 +126,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f45424e33ecea1a4d9b0af3627d9e9ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitpos: {x: 0, y: 0, z: 0}
+  boxColl: {fileID: 0}
+  coll: {fileID: 0}
+--- !u!61 &4352884837638687165
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1924085036775249341}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &5648211836562545205
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,6 +282,8 @@ MonoBehaviour:
   needTrigger: 0
   arrive: 0
   maxStayTime: 1
+  maxStayBackTime: 0
   stayTime: 0
-  isMove: 0
+  stayBackTime: 0
+  isBack: 1
   moveSpeed: 3

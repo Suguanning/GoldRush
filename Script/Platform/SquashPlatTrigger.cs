@@ -12,8 +12,10 @@ public class SquashPlatTrigger : MonoBehaviour
     private float sonY;
     public bool arrive;
     public float maxStayTime;
+    public float maxStayBackTime;
     public double stayTime;
-    public bool isMove;
+    public double stayBackTime;
+    public bool isBack = true;
     public float moveSpeed;
     // Start is called before the first frame update
     void Start()
@@ -31,24 +33,27 @@ public class SquashPlatTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (needTrigger && !arrive)
+        if (needTrigger && !arrive && isBack && stayBackTime >= maxStayBackTime)
         {
-            // 触发时父物体朝子物体移动
-            LeanTween.move(parentObj, new Vector3(sonX, sonY, 0), moveSpeed);
+            LeanTween.move(parentObj, new Vector3(sonX, sonY, 0), moveSpeed).setEase(LeanTweenType.easeOutBounce);
+            isBack = false;
+            stayBackTime = 0;
         }
     }
 
     private void FixedUpdate()
     {
-        if (!needTrigger && !arrive && !isMove) { 
+        if (!needTrigger && !arrive && isBack && stayBackTime >= maxStayBackTime) { 
             LeanTween.move(parentObj, new Vector3(sonX, sonY, 0), moveSpeed).setEase(LeanTweenType.easeOutBounce);
-            isMove = true;
+            isBack = false;
+            stayBackTime = 0;
         }
+        if (isBack) stayBackTime += 0.02;
 
         // 到达子物体位置
         if (parentObj.transform.position == new Vector3(sonX, sonY, 0)) arrive = true;
         // 回到父物体位置
-        if (parentObj.transform.position == new Vector3(parentX, parentY)) isMove = false;
+        if (parentObj.transform.position == new Vector3(parentX, parentY)) isBack = true;
         // 到达子物体位置进行停留计时
         if (arrive) stayTime += 0.02;
         if (stayTime >= maxStayTime)
