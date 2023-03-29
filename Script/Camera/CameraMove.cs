@@ -21,6 +21,7 @@ public class CameraMove : MonoBehaviour
     {
         xOffset = transform.position.x - target.transform.position.x;
         yOffset = transform.position.y - target.transform.position.y;
+        GameEvents.current.OnSquashPlatEnter += OnSquashPlatEnter;
         Rb2D = GetComponent<Rigidbody2D>();
         cam = GetComponent<Camera>();
         camSize = cam.orthographicSize;
@@ -59,5 +60,10 @@ public class CameraMove : MonoBehaviour
         xOffset = x;
         yOffset = y;
         camSize = size;
+    }
+    private void OnSquashPlatEnter()
+    {
+        shakeTriger = true;
+        shakeScale = 0.3f;
     }
 }

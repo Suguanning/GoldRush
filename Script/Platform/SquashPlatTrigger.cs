@@ -41,7 +41,7 @@ public class SquashPlatTrigger : MonoBehaviour
     private void FixedUpdate()
     {
         if (!needTrigger && !arrive && !isMove) { 
-            LeanTween.move(parentObj, new Vector3(sonX, sonY, 0), moveSpeed);
+            LeanTween.move(parentObj, new Vector3(sonX, sonY, 0), moveSpeed).setEase(LeanTweenType.easeOutBounce);
             isMove = true;
         }
 
@@ -53,7 +53,7 @@ public class SquashPlatTrigger : MonoBehaviour
         if (arrive) stayTime += 0.02;
         if (stayTime >= maxStayTime)
         {
-            LeanTween.move(parentObj, new Vector3(parentX, parentY, 0), moveSpeed);
+            LeanTween.move(parentObj, new Vector3(parentX, parentY, 0), moveSpeed).setEase(LeanTweenType.easeOutBounce);
             stayTime = 0;
             arrive = false;
         }

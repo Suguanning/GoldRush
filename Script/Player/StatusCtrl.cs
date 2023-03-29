@@ -12,13 +12,14 @@ public class StatusCtrl : MonoBehaviour
     public Collision coll;
     public CoinRotate rotate;
     public bool isAlive = true;
+    public bool isSquashing = false;
     public float squashTime = 0.5f;
     public float recoverTime = 3.0f;
     public float squashKeep = 3.0f;
+    public int recoverCnt = 0;
     public bool doSq = false;
     public bool doRc = false;
     private Transform trans;
-    private event Action OnSqExit;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,8 +31,8 @@ public class StatusCtrl : MonoBehaviour
         GameEvents.current.OnShowTrigerEnter += OnShowModeEnter;
         GameEvents.current.OnShowTrigerExit += OnShowModeExit;
         GameEvents.current.OnDangerPlatEnter += OnDangerPlatEnter;
-        OnSqExit += OnSquashPlatExit;
-
+        GameEvents.current.OnSquashPlatEnter += OnSquashPlatEnter;
+        GameEvents.current.OnSquashPlatExit += OnSquashPlatExit;
     }
 
     // Update is called once per frame
@@ -39,11 +40,11 @@ public class StatusCtrl : MonoBehaviour
     {
         if(mode == "play")
         {
-            move.enabled = true;
+            
         }
         else if(mode == "show")
         {
-            move.enabled = false;
+
         }
         if (doSq)
         {
@@ -54,6 +55,21 @@ public class StatusCtrl : MonoBehaviour
         {
             OnSquashPlatExit();
             doRc = false;
+        }
+    }
+    private void FixedUpdate()
+    {
+        if (!isSquashing)
+        {
+            if (recoverCnt * Time.fixedDeltaTime < squashKeep)
+            {
+                recoverCnt++;
+                
+            }else if(recoverCnt * Time.fixedDeltaTime >= squashKeep)
+            {
+                SquashRecover();
+                recoverCnt = 0;
+            }
         }
     }
 
@@ -67,11 +83,13 @@ public class StatusCtrl : MonoBehaviour
     private void OnShowModeEnter(int showNum)
     {
         move.rb.velocity = new Vector2(0, 0);
+        move.enabled = false;
         mode = "show";
     }
     private void OnShowModeExit()
     {
         mode = "play";
+        move.enabled = true;
     }
     private void OnDangerPlatEnter()
     {
@@ -88,17 +106,22 @@ public class StatusCtrl : MonoBehaviour
     {
         rotate.autoRotate = false;
         rotate.enabled = false;
+        move.rb.velocity = new Vector2(0, 0);
+        move.rb.gravityScale = 3;
+        move.enabled = false;
+        isSquashing = true;
+        recoverCnt = 0;
         LeanTween.scaleX(gameObject, 1.7f, squashTime).setEase(LeanTweenType.easeOutBounce);
         LeanTween.scaleY(gameObject, 0.3f, squashTime).setEase(LeanTweenType.easeOutBounce);
     }
   
     private void OnSquashPlatExit()
     {
-        StartCoroutine(SquashRecover());
+        move.enabled = true;
+        isSquashing = false;
     }
-    IEnumerator SquashRecover()
+    private void SquashRecover()
     {
-        yield return new WaitForSeconds(squashKeep);
         rotate.autoRotate = true;
         rotate.enabled = true;
         LeanTween.scaleX(gameObject, 1, recoverTime).setEase(LeanTweenType.easeOutBounce);
