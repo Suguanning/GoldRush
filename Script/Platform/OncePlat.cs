@@ -7,7 +7,7 @@ public class OncePlat : MonoBehaviour
     public float collTime;
     public float notCollTime;
     public bool isColl;
-    public float platMaxExistTime;
+    public float platMaxExistTime = 0.5f;
     public Collision coll;
     private SpriteRenderer render;
     private BoxCollider2D box;
