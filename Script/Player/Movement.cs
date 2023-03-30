@@ -359,8 +359,13 @@ public class Movement : MonoBehaviour
 
         if (!wallJumped)
         {
-            rb.velocity = new Vector2(dir.x * speed, rb.velocity.y);
-            animator.SetFloat("Speed", dir.x);
+           
+            if(abs(rb.velocity.x) < speed)
+            {
+                rb.velocity = new Vector2(dir.x * speed, rb.velocity.y);
+                animator.SetFloat("Speed", dir.x);
+            }
+
            // animator.SetFloat("YSpeed", rb.velocity.y);
         }
         else
@@ -372,7 +377,17 @@ public class Movement : MonoBehaviour
        // animator.SetBool("WallSlide", false);
 
     }
-
+    private float abs(float num)
+    {
+        if(num > 0)
+        {
+            return num;
+        }
+        else
+        {
+            return -num;
+        }
+    }
     //跳跃的方法
     private void Jump(Vector2 dir, bool wall)
     {
