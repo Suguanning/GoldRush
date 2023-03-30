@@ -83,4 +83,13 @@ public class GameEvents : MonoBehaviour
             OnSetHealth(h);
         }
     }
+
+    public event Action OnMarkTouchCoin;
+    public void MarkTouchCoin() 
+    {
+        if (OnMarkTouchCoin != null)
+        {
+            OnMarkTouchCoin();
+        }
+    }
 }
