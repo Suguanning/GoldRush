@@ -157,13 +157,16 @@ public class StatusCtrl : MonoBehaviour
         health -= coinManDamage;
         GameEvents.current.SetHealth(health);
         float tmp = blowSpeed * (dir ? 1 : -1);
-        move.rb.velocity = new Vector2(tmp / 2, blowSpeed);
+        move.rb.velocity = new Vector2(tmp , blowSpeed);
         StartCoroutine(BlowWait());
     }
     IEnumerator BlowWait()
     {
         move.enabled = false;
+        move.GetComponent<BetterJumping>().enabled = false;
+        move.rb.gravityScale = 3;
         yield return new WaitForSeconds(0.6f);
+        move.GetComponent<BetterJumping>().enabled = true;
         move.enabled = true;
     }
     private void OnCoinmanExit()

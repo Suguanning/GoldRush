@@ -100,4 +100,13 @@ public class GameEvents : MonoBehaviour
             OnCoinmanEnter(dir);
         }
     }
+
+    public event Action<int> OnMissionFinshed;
+    public void MissionFinished(int mission)
+    {
+        if (OnMissionFinshed != null)
+        {
+            OnMissionFinshed(mission);
+        }
+    }
 }

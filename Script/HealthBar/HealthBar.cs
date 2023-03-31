@@ -27,19 +27,11 @@ public class HealthBar : MonoBehaviour
         Vector3 theScale = transform.localScale;
         Vector3 transScale;
         Vector3 move;
-
-
         theScale.x = (health) * scaleMax.x;
         transScale = Vector3.Lerp(trans.localScale, theScale, barSpeed * Time.deltaTime);
         trans.localScale = transScale;
-        Debug.Log("size:" + trans.rect.width);
-        Debug.Log("scale:" + trans.localScale+"Max:"+scaleMax);
         move = new Vector3(((transScale.x - scaleMax.x)* trans.rect.width / 2), 0, 0);
-        Debug.Log("move:"+move+"trans:"+trans.position);
         trans.localPosition = move + pos;
-        //trans.Translate(move);
-            //transform.Translate(move);
-
     }
     void OnSetHealth(float h)
     {
