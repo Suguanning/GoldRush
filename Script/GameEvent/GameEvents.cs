@@ -85,11 +85,19 @@ public class GameEvents : MonoBehaviour
     }
 
     public event Action OnMarkTouchCoin;
-    public void MarkTouchCoin() 
+    public void MarkTouchCoin()
     {
         if (OnMarkTouchCoin != null)
         {
             OnMarkTouchCoin();
+        }
+    }
+    public event Action<bool> OnCoinmanEnter;
+    public void CoinmanEnter(bool dir)
+    {
+        if (OnCoinmanEnter != null)
+        {
+            OnCoinmanEnter(dir);
         }
     }
 }

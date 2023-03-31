@@ -9,7 +9,7 @@ public class DiaBox : MonoBehaviour
     public Image Mark;
     public Image CoinMark;
     public Image Coin;
-    //public Image Joker;
+    public Image Joker;
     public Scripts scp;
     public Text character;
     public Text lines;
@@ -26,7 +26,7 @@ public class DiaBox : MonoBehaviour
         Mark.enabled = false;
         CoinMark.enabled = false;
         Coin.enabled = false;
-        //Joker.enable = true;
+        Joker.enabled = false;
         Fkey.enabled = false;
 
         character.enabled = false;
@@ -81,28 +81,28 @@ public class DiaBox : MonoBehaviour
             Mark.enabled = true;
             CoinMark.enabled = false;
             Coin.enabled = false;
-            //Joker.enable = false;
+            Joker.enabled = false;
         }
         else if (spkName == "CoinMark")
         {
             Mark.enabled = false;
             CoinMark.enabled = true;
             Coin.enabled = false;
-            //Joker.enable = false;
+            Joker.enabled = false;
         }
         else if (spkName == "Coin")
         {
             Mark.enabled = false;
             CoinMark.enabled = false;
             Coin.enabled = true;
-            //Joker.enable = false;
+            Joker.enabled = false;
         }
         else if (spkName == "Joker")
         {
             Mark.enabled = false;
             CoinMark.enabled = false;
             Coin.enabled = false;
-            //Joker.enable = true;
+            Joker.enabled = true;
         }
     }
     public void OnShowNumRecieve(int num)

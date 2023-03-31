@@ -20,10 +20,12 @@ public class StatusCtrl : MonoBehaviour
     [Space]
     [Header("Stats")]
     public float health = 100;
+    public float coinManDamage = 30;
     public Vector3 bornPosition;
     public float squashTime = 0.5f;
     public float recoverTime = 3.0f;
     public float squashKeep = 3.0f;
+    public float blowSpeed = 35;
     private int recoverCnt = 0;
 
     private Transform trans;
@@ -40,6 +42,7 @@ public class StatusCtrl : MonoBehaviour
         GameEvents.current.OnDangerPlatEnter += OnDangerPlatEnter;
         GameEvents.current.OnSquashPlatEnter += OnSquashPlatEnter;
         GameEvents.current.OnSquashPlatExit += OnSquashPlatExit;
+        GameEvents.current.OnCoinmanEnter += OnCoinmanEnter;
     }
 
     // Update is called once per frame
@@ -138,6 +141,7 @@ public class StatusCtrl : MonoBehaviour
         LeanTween.scaleY(gameObject, 1, recoverTime).setEase(LeanTweenType.easeOutBounce);
     }
 
+    
     private void OnMovePlatEnter()
     {
 
@@ -148,9 +152,19 @@ public class StatusCtrl : MonoBehaviour
 
     }
 
-    private void OnCoinmanEnter()
+    private void OnCoinmanEnter(bool dir)
     {
-
+        health -= coinManDamage;
+        GameEvents.current.SetHealth(health);
+        float tmp = blowSpeed * (dir ? 1 : -1);
+        move.rb.velocity = new Vector2(tmp / 2, blowSpeed);
+        StartCoroutine(BlowWait());
+    }
+    IEnumerator BlowWait()
+    {
+        move.enabled = false;
+        yield return new WaitForSeconds(0.6f);
+        move.enabled = true;
     }
     private void OnCoinmanExit()
     {

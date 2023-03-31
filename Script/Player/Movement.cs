@@ -176,6 +176,10 @@ public class Movement : MonoBehaviour
                     isGliding = true;
                     rb.gravityScale = 0;
                 }
+                else
+                {
+                    rb.gravityScale = 3;
+                }
             }
         }
         if (Input.GetButtonUp("Jump"))
@@ -359,13 +363,14 @@ public class Movement : MonoBehaviour
 
         if (!wallJumped)
         {
-           
-            if(abs(rb.velocity.x) < speed)
-            {
-                rb.velocity = new Vector2(dir.x * speed, rb.velocity.y);
-                animator.SetFloat("Speed", dir.x);
-            }
-
+            //if(abs(rb.velocity.x) < abs(dir.x * speed))
+            //{
+            //    if((rb.velocity.x <= 0 && dir.x >= 0) || (rb.velocity.x >= 0 && dir.x <= 0))
+            //    {
+                    rb.velocity = new Vector2(dir.x * speed, rb.velocity.y);
+                    animator.SetFloat("Speed", dir.x);
+            //    }
+            //}
            // animator.SetFloat("YSpeed", rb.velocity.y);
         }
         else

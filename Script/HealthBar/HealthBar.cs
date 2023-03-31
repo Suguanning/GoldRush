@@ -5,38 +5,48 @@ using UnityEngine;
 public class HealthBar : MonoBehaviour
 {
     // Start is called before the first frame update
-    public float health;
-    public float minScale = 1;
-    public float maxScale = 2;
-    public float moveTime = 0.3f;
-    public float originX = -310;
-    public RectTransform rec;
+    public float health = 1;
+    public float barSpeed = 3;
+    public Vector3 scaleMax;
+    public Vector3 pos;
+    public Rigidbody2D rb;
+    public RectTransform trans;
     void Start()
     {
-        health = 100;
-        GameEvents.current.OnSetHealth += OnSetHealth;
-        rec = GetComponent<RectTransform>();
-        //originX = rec.localPosition.x;
-        OnSetHealth(health);
+        
+        GameEvents.current.OnSetHealth+=OnSetHealth;
+        trans = GetComponent<RectTransform>();
+        scaleMax = trans.localScale;
+        pos = trans.localPosition;
+        //rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        Vector3 theScale = transform.localScale;
+        Vector3 transScale;
+        Vector3 move;
+
+
+        theScale.x = (health) * scaleMax.x;
+        transScale = Vector3.Lerp(trans.localScale, theScale, barSpeed * Time.deltaTime);
+        trans.localScale = transScale;
+        Debug.Log("size:" + trans.rect.width);
+        Debug.Log("scale:" + trans.localScale+"Max:"+scaleMax);
+        move = new Vector3(((transScale.x - scaleMax.x)* trans.rect.width / 2), 0, 0);
+        Debug.Log("move:"+move+"trans:"+trans.position);
+        trans.localPosition = move + pos;
+        //trans.Translate(move);
+            //transform.Translate(move);
+
+    }
+    void OnSetHealth(float h)
+    {
+        health = h / 100;
+        if(health < 0)
         {
-            OnSetHealth(health);
+            health = 0;
         }
     }
-
-    private void OnSetHealth(float h)
-    {
-
-        health = h;
-        LeanTween.scaleX(gameObject, h / 100 * (maxScale - minScale) + minScale, moveTime).setEase(LeanTweenType.easeOutSine);
-        //Debug.Log(rec.sizeDelta.x);
-        LeanTween.moveLocalX(gameObject,  h / 100 * (maxScale - minScale)  * 0.5f * rec.sizeDelta.x+originX, moveTime).setEase(LeanTweenType.easeOutSine);
-        //LeanTween.
-    }
-
 }
