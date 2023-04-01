@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4023881216336064208}
   - component: {fileID: 4023881216336064209}
   - component: {fileID: 4023881216336064214}
+  - component: {fileID: 1312197838485112142}
   m_Layer: 0
   m_Name: EndPoint
   m_TagString: Untagged
@@ -29,6 +30,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -10, y: 13.43, z: 0.95}
   m_LocalScale: {x: 2, y: 2, z: 0}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4023881216679475036}
   m_Father: {fileID: 0}
@@ -45,6 +47,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -117,6 +120,18 @@ MonoBehaviour:
   mission: 0
   keyPic: {fileID: 4023881216679475037}
   isFinished: 0
+--- !u!114 &1312197838485112142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4023881216336064210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96e5f9999d786144a8f4438131ab3f89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4023881216679475037
 GameObject:
   m_ObjectHideFlags: 0
@@ -145,13 +160,14 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.011, y: 0.641, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4023881216336064215}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &4023881216679475026
 Animator:
-  serializedVersion: 3
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -164,10 +180,12 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!212 &4023881216679475027
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -179,6 +197,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1

@@ -77,6 +77,10 @@ public class Scripts : MonoBehaviour
         convAndAct[3].AddLine("God of Fools", "Full the bar, and I'll restore you to your original state.");
         convAndAct[3].AddLine("God of Fools", "Wish you the best! Hahahahaha!");
         convAndAct[3].AddLine("Mark(Coin)", "OK! LET'US GOOOOOOOO!");
+        convAndAct[4] = new ConvAndAct(1, 0);
+        convAndAct[4].AddLine("God of Fools", " now I give you the ability to dash(shift), work hard to become a perfect gold coin!");
+        convAndAct[5] = new ConvAndAct(1, 0);
+        convAndAct[5].AddLine("God of Fools", "now I give you the ability to double jump, work hard to become a perfect gold coin!");
 
 
     }
