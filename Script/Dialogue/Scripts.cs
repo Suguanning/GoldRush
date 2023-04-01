@@ -41,9 +41,12 @@ public class Scripts : MonoBehaviour
     void Start()
     {
         convAndAct[0] = new ConvAndAct(3, 0);
-        convAndAct[0].AddLine("Mark", "Welcome To My Game");
-        convAndAct[0].AddLine("CoinMark", "Please help me!");
-        convAndAct[0].AddLine("Joker","Thank you very much!");
+        convAndAct[0].AddLine("Mark", "Welcome To Gold Rush");
+        convAndAct[0].AddLine("CoinMark", "What happened to me!!!");
+        convAndAct[0].AddLine("Joker","HA HA HA!!Enjoy!!!");
+        convAndAct[1] = new ConvAndAct(2, 0);
+        convAndAct[1].AddLine("Mark", "Awesome!!You finished the demo!");
+        convAndAct[1].AddLine("Mark", "Please wait for the 1.0 version!");
     }
 
 }

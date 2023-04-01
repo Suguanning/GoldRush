@@ -21,12 +21,19 @@ public class EndPoint : MonoBehaviour
         if (isArrived)
         {
             keyPic.SetActive(true);
-            if (Input.GetKeyDown(KeyCode.F)&&!isFinished)
+            if (Input.GetKeyUp(KeyCode.F)&&!isFinished)
             {
                 GameEvents.current.MissionFinished(mission);
                 isFinished = true;
                 Debug.Log("Mission Finished!!");
+                GameEvents.current.ShowTrigerEnter(2);
+
             }
+            if (Input.GetKeyUp(KeyCode.F) && !isFinished)
+            {
+                
+            }
+
         }
         else
         {

@@ -19,6 +19,14 @@ public class ShowSystem : MonoBehaviour
         {
             GameEvents.current.ShowTrigerEnter(1);
         }
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+#if     UNITY_EDITOR //编辑器中退出游戏
+            UnityEditor.EditorApplication.isPlaying = false;
+#else //应用程序中退出游戏
+            UnityEngine.Application.Quit();
+#endif
+        }
     }
 
     void RunScript(int sceneNum, int len)

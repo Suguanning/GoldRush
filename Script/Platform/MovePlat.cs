@@ -44,4 +44,10 @@ public class MovePlat : MonoBehaviour
             collision.transform.SetParent(null);
         }
     }
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position+ new Vector3(xDistance, yDistance, 0f), 0.5f);
+
+    }
 }

@@ -22,6 +22,7 @@ public class CameraMove : MonoBehaviour
         xOffset = transform.position.x - target.transform.position.x;
         yOffset = transform.position.y - target.transform.position.y;
         GameEvents.current.OnSquashPlatEnter += OnSquashPlatEnter;
+        GameEvents.current.OnChangeCamera += OnChangeCamera;
         Rb2D = GetComponent<Rigidbody2D>();
         cam = GetComponent<Camera>();
         camSize = cam.orthographicSize;

@@ -13,13 +13,15 @@ public class CoinRotate : MonoBehaviour
     {
         transform = GetComponent<Transform>();
         autoRotate = true;
-       // move = GetComponent<Movement>();
+
+        // move = GetComponent<Movement>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(autoRotate == true)
+ 
+        if (autoRotate == true)
         {
             float z = move.rb.velocity.magnitude;
             if (move.facingRight)

@@ -20,14 +20,15 @@ public class StatusCtrl : MonoBehaviour
     [Space]
     [Header("Stats")]
     public float health = 100;
-    public float coinManDamage = 30;
+    public float coinManDamage = 5;
     public Vector3 bornPosition;
     public float squashTime = 0.5f;
     public float recoverTime = 3.0f;
     public float squashKeep = 3.0f;
     public float blowSpeed = 35;
+    public float sat = 1;
     private int recoverCnt = 0;
-
+    private SpriteRenderer spRender;
     private Transform trans;
     // Start is called before the first frame update
     void Start()
@@ -36,6 +37,7 @@ public class StatusCtrl : MonoBehaviour
         coll = GetComponent<Collision>();
         trans = GetComponent<Transform>();
         rotate = GetComponentInChildren<CoinRotate>();
+        spRender = GetComponent<SpriteRenderer>();
         LeanTween.init(1800);
         GameEvents.current.OnShowTrigerEnter += OnShowModeEnter;
         GameEvents.current.OnShowTrigerExit += OnShowModeExit;
@@ -48,6 +50,8 @@ public class StatusCtrl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Material spMaterial = spRender.material;
+        spMaterial.SetFloat("_Saturation", sat);
         if(mode == "play")
         {
             
@@ -67,6 +71,17 @@ public class StatusCtrl : MonoBehaviour
             health += 10;
             GameEvents.current.SetHealth(health);
             doRc = false;
+        }
+        if (isAlive)
+        {
+            if (health < 0.1)
+            {
+                isAlive = false;
+            }
+        }
+        else
+        {
+            ResetStatus();
         }
     }
     private void FixedUpdate()
@@ -90,6 +105,9 @@ public class StatusCtrl : MonoBehaviour
         health = 100;
         isAlive = true;
         trans.position = bornPosition;
+        move.rb.velocity = new Vector2(0, 0);
+        GameEvents.current.SetHealth(health);
+        GameEvents.current.Reset();
     }
     //CallBack functions
     private void OnShowModeEnter(int showNum)
@@ -165,7 +183,7 @@ public class StatusCtrl : MonoBehaviour
         move.enabled = false;
         move.GetComponent<BetterJumping>().enabled = false;
         move.rb.gravityScale = 3;
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(1.0f);
         move.GetComponent<BetterJumping>().enabled = true;
         move.enabled = true;
     }

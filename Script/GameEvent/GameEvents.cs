@@ -83,7 +83,14 @@ public class GameEvents : MonoBehaviour
             OnSetHealth(h);
         }
     }
-
+    public event Action<float, float, float> OnChangeCamera;
+    public void ChangeCamera(float x, float y, float size)
+    {
+        if(OnChangeCamera != null)
+        {
+            OnChangeCamera(x, y, size);
+        }
+    }
     public event Action OnMarkTouchCoin;
     public void MarkTouchCoin()
     {
@@ -107,6 +114,15 @@ public class GameEvents : MonoBehaviour
         if (OnMissionFinshed != null)
         {
             OnMissionFinshed(mission);
+        }
+    }
+
+    public event Action OnReset;
+    public void Reset()
+    {
+        if(OnReset != null)
+        {
+            OnReset();
         }
     }
 }
