@@ -236,6 +236,7 @@ public class Coinman : MonoBehaviour
         patProcess = 0;
         if (playerColl != null)
             Physics2D.IgnoreCollision(coll, playerColl, false);
+        transform.position = pos;
     }
     void OnDrawGizmos()
     {

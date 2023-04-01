@@ -124,21 +124,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 1
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
-  patrol0: {x: 2.26, y: 0, z: 0}
-  patrol1: {x: -2.18, y: 0, z: 0}
+  patrol0: {x: 0.97, y: 0, z: 0}
+  patrol1: {x: -0.54, y: 0, z: 0}
   patSpeed: 3
   runSpeed: 6
-  vision: 12.76
+  vision: 4.21
   restTime: 1
   restCnt: 0
   target: {fileID: 0}
   rb: {fileID: 0}
   anim: {fileID: 0}
-  detHeigh: 0.64
+  detHeigh: 6.07
   patProcess: 0
   isPat0Arrive: 0
   isPat1Arrive: 0
