@@ -125,4 +125,14 @@ public class GameEvents : MonoBehaviour
             OnReset();
         }
     }
+
+    public event Action OnMarkToCoin;
+    public void MarkToCoin()
+    {
+        if (OnMarkToCoin != null)
+        {
+            OnMarkToCoin();
+        }
+    }
+
 }

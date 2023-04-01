@@ -83,21 +83,21 @@ public class DiaBox : MonoBehaviour
             Coin.enabled = false;
             Joker.enabled = false;
         }
-        else if (spkName == "CoinMark")
+        else if (spkName == "Mark(Coin)")
         {
             Mark.enabled = false;
             CoinMark.enabled = true;
             Coin.enabled = false;
             Joker.enabled = false;
         }
-        else if (spkName == "Coin")
+        else if (spkName == "Gold Coin")
         {
             Mark.enabled = false;
             CoinMark.enabled = false;
             Coin.enabled = true;
             Joker.enabled = false;
         }
-        else if (spkName == "Joker")
+        else if (spkName == "God of Fools")
         {
             Mark.enabled = false;
             CoinMark.enabled = false;

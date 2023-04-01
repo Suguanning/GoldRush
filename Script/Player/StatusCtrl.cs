@@ -26,9 +26,9 @@ public class StatusCtrl : MonoBehaviour
     public float recoverTime = 3.0f;
     public float squashKeep = 3.0f;
     public float blowSpeed = 35;
-    public float sat = 1;
+    public int showNumber;
     private int recoverCnt = 0;
-    private SpriteRenderer spRender;
+
     private Transform trans;
     // Start is called before the first frame update
     void Start()
@@ -37,7 +37,7 @@ public class StatusCtrl : MonoBehaviour
         coll = GetComponent<Collision>();
         trans = GetComponent<Transform>();
         rotate = GetComponentInChildren<CoinRotate>();
-        spRender = GetComponent<SpriteRenderer>();
+     
         LeanTween.init(1800);
         GameEvents.current.OnShowTrigerEnter += OnShowModeEnter;
         GameEvents.current.OnShowTrigerExit += OnShowModeExit;
@@ -45,13 +45,14 @@ public class StatusCtrl : MonoBehaviour
         GameEvents.current.OnSquashPlatEnter += OnSquashPlatEnter;
         GameEvents.current.OnSquashPlatExit += OnSquashPlatExit;
         GameEvents.current.OnCoinmanEnter += OnCoinmanEnter;
+        GameEvents.current.OnMarkToCoin += OnMarkToCoin;
+        GameEvents.current.OnReset += ResetStatus;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Material spMaterial = spRender.material;
-        spMaterial.SetFloat("_Saturation", sat);
+
         if(mode == "play")
         {
             
@@ -118,8 +119,11 @@ public class StatusCtrl : MonoBehaviour
     }
     private void OnShowModeExit()
     {
-        mode = "play";
-        move.enabled = true;
+        if(showNumber >= 4)
+        {
+            mode = "play";
+            move.enabled = true;
+        }
     }
     private void OnDangerPlatEnter()
     {
@@ -190,5 +194,11 @@ public class StatusCtrl : MonoBehaviour
     private void OnCoinmanExit()
     {
 
+    }
+    private void OnMarkToCoin()
+    {
+       // ResetStatus();
+       move.enabled = false;
+       move.rb.gravityScale = 3;
     }
 }
