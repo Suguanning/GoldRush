@@ -28,6 +28,7 @@ public class StatusCtrl : MonoBehaviour
     public float blowSpeed = 35;
     public int showNumber;
     private int recoverCnt = 0;
+    public float initHealth = 100;
 
     private Transform trans;
     // Start is called before the first frame update
@@ -47,6 +48,8 @@ public class StatusCtrl : MonoBehaviour
         GameEvents.current.OnCoinmanEnter += OnCoinmanEnter;
         GameEvents.current.OnMarkToCoin += OnMarkToCoin;
         GameEvents.current.OnReset += ResetStatus;
+        health = initHealth;
+        GameEvents.current.SetHealth(initHealth);
     }
 
     // Update is called once per frame
@@ -108,11 +111,12 @@ public class StatusCtrl : MonoBehaviour
         trans.position = bornPosition;
         move.rb.velocity = new Vector2(0, 0);
         GameEvents.current.SetHealth(health);
-        GameEvents.current.Reset();
+        //GameEvents.current.Reset();
     }
     //CallBack functions
     private void OnShowModeEnter(int showNum)
     {
+        showNumber = showNum;
         move.rb.velocity = new Vector2(0, 0);
         move.enabled = false;
         mode = "show";

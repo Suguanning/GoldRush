@@ -62,6 +62,23 @@ public class Scripts : MonoBehaviour
         convAndAct[2].AddLine("Mark(Coin)", "What happened?!!I became a coin!!");
         convAndAct[2].AddLine("Gold Coin", "Let's find out where Mark is hiding!");
 
+        convAndAct[3] = new ConvAndAct(14, 0);
+        convAndAct[3].AddLine("God of Fools", "I am the great God of fools!");
+        convAndAct[3].AddLine("God of Fools", " Eliminate all unhappiness and worries on this day of fools!");
+        convAndAct[3].AddLine("Mark(Coin)", "God of Fools, can you help me put everything back to the way it was?");
+        convAndAct[3].AddLine("God of Fools", "As a god of the outside world," );
+        convAndAct[3].AddLine("God of Fools", "I am limited in my ability here.Only if you getting more GOLD CONTENT......");
+        convAndAct[3].AddLine("Mark(Coin)", "GOLD CONTENT?");
+        convAndAct[3].AddLine("God of Fools", "emmm......you heard it wrong.");
+        convAndAct[3].AddLine("God of Fools","I will help you as long as you become more POWERFUL");
+        convAndAct[3].AddLine("God of Fools", "Here is your power bar.");
+        convAndAct[3].AddLine("God of Fools", "Hardening in the flames can make you stronger.");
+        convAndAct[3].AddLine("God of Fools", "Being caught by these coin men will make you weaker.");
+        convAndAct[3].AddLine("God of Fools", "Full the bar, and I'll restore you to your original state.");
+        convAndAct[3].AddLine("God of Fools", "Wish you the best! Hahahahaha!");
+        convAndAct[3].AddLine("Mark(Coin)", "OK! LET'US GOOOOOOOO!");
+
+
     }
 
 }
