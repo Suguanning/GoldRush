@@ -26,7 +26,7 @@ public class Coinman : MonoBehaviour
     public bool isPat1Arrive;
     public bool isDetected =false;
     public bool isFaceRight = true;
-
+    private Collision colli;
     private bool isInit = false;
     // Start is called before the first frame update
     void Start()
@@ -35,6 +35,7 @@ public class Coinman : MonoBehaviour
         anim = GetComponent<Animator>();
         coll = GetComponent<Collider2D>();
         GameEvents.current.OnReset += OnReset;
+        colli = GetComponent<Collision>();
         pos = transform.position;
         isInit = true;
     }
@@ -164,8 +165,18 @@ public class Coinman : MonoBehaviour
         Vector3 tar = target.transform.position;
         if(abs(tar.x - transform.position.x) > 0.3)
         {
-            float dir = tar.x - transform.position.x > 0 ? 1 : -1;
-            rb.velocity = new Vector2(dir * runSpeed, rb.velocity.y);
+            if (colli.onGround)
+            {
+                float dir = tar.x - transform.position.x > 0 ? 1 : -1;
+                rb.velocity = new Vector2(dir * runSpeed, rb.velocity.y);
+            }
+            else
+            {
+                rb.velocity = new Vector2(0, rb.velocity.y);
+                anim.SetBool("Walk", false);
+                anim.SetFloat("Speed", abs(rb.velocity.x));
+            }
+            
             anim.SetBool("Walk", false);
             anim.SetFloat("Speed", abs(rb.velocity.x));
         }

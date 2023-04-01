@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8533445489396977972}
   - component: {fileID: 8533445489396978122}
   - component: {fileID: 8533445489396978123}
+  - component: {fileID: 534873239918115439}
   m_Layer: 7
   m_Name: CoinMan
   m_TagString: Untagged
@@ -31,6 +32,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.52, y: -3.37, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -46,6 +48,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -88,7 +91,7 @@ SpriteRenderer:
   m_SpriteSortPoint: 0
 --- !u!95 &8533445489396977969
 Animator:
-  serializedVersion: 3
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -101,10 +104,12 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &8533445489396977972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,3 +181,33 @@ CapsuleCollider2D:
   m_Offset: {x: 0.0918262, y: 0.027555943}
   m_Size: {x: 0.84497595, y: 2.9295516}
   m_Direction: 0
+--- !u!114 &534873239918115439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8533445489396977968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cc13dd1b600cc8489f022c1f894fa71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  onGround: 0
+  onWall: 0
+  onRightWall: 0
+  onLeftWall: 0
+  wallSide: 0
+  leftOffsetUp: {x: 0, y: 0}
+  leftOffset: {x: 0, y: 0}
+  leftOffsetDown: {x: 0, y: 0}
+  rightOffsetUp: {x: 0, y: 0}
+  rightOffset: {x: 0, y: 0}
+  rightOffsetDown: {x: 0, y: 0}
+  bottomOffset: {x: 0, y: -1.34}
+  rightBottom: {x: 0.22, y: -1.34}
+  leftBottom: {x: -0.09, y: -1.34}
+  collisionRadius: 0.54
